@@ -48,3 +48,5 @@ Route::delete('/user/{id}', [UserController::class, 'destroy']);
 
 Route::post('/auth/login', [LoginController::class, 'login']);
 Route::post('/auth/register', [LoginController::class, 'register']);
+Route::put('/auth/update/{id}' ,[LoginController::class , 'update']);
+Route::delete('/auth/delete/{id}'  , [LoginController::class , 'destroy']);
