@@ -33,7 +33,7 @@ class LoginController extends Controller
     // }
 
     //Hàm lấy token từ api login keycloak
-    public function getTokenHttpLogin()
+    public function getTokenKeycloak()
     {
         // Lấy token từ login
         $http_login_keycloak = Http::withHeaders([
@@ -46,8 +46,8 @@ class LoginController extends Controller
         if ($http_login_keycloak['access_token'] == null) {
             return null;
         }
-        $access_token = $http_login_keycloak['access_token'];
-        return $access_token;
+        
+        return $$http_login_keycloak['access_token'];
     }
 
     public function getUserApiKeycloak($httpGetUser, $token)
@@ -64,10 +64,7 @@ class LoginController extends Controller
     }
 
 
-
-    public function register(Request $request)
-    {
-
+    public function validateRegister(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:10',
             'username' => 'required|min:6',
@@ -79,11 +76,16 @@ class LoginController extends Controller
                 'errors' => $validator->errors()->all(),
             ]);
         }
+    }
+    public function register(Request $request)
+    {
+        $this->validateRegister($request);
 
-        $token = $this->getTokenHttpLogin();
+        $token = $this->getTokenKeycloak();
         if ($token == "") {
             return response(['errors' => 'Đăng ký thất bại']);
         } else {
+            // biến để dạng carmel case
             $http_register_keycloak =  Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $token,
@@ -96,12 +98,11 @@ class LoginController extends Controller
             ]);
 
 
-            if ($http_register_keycloak) {
+            if ($http_register_keycloak ) { // check lai theo status code
                 $user =  User::create([
                     'name' => $request->name,
                     'email' => $request->email,
                     'password' => $request->password,
-
                 ]);
             }
             return response([
@@ -133,9 +134,11 @@ class LoginController extends Controller
         if ($token == "") {
             return response(['errors' => 'Đăng ký thất bại']);
         } else {
-            $user = User::find($id);
+            $user = User::find($id); // firstOrFalse
             if ($user) {
                 $user_id_keycloak = $user->user_id_keycloak;
+
+                // event laravel
                 $http_update_keycloak = Http::withHeaders([
                     'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . $token,
@@ -146,7 +149,7 @@ class LoginController extends Controller
                     'lastName' => $request->lastName,
                 ]);
 
-                if ($http_update_keycloak) {
+                if ($http_update_keycloak) { // check lai điều kiện
                     $user->update([
                         'name' => $request->name,
                         'email' => $request->email,
