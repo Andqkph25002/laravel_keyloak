@@ -1,0 +1,260 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th12 28, 2023 lúc 03:30 AM
+-- Phiên bản máy phục vụ: 10.4.27-MariaDB
+-- Phiên bản PHP: 8.2.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Cơ sở dữ liệu: `laravel_oauth2`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `failed_jobs`
+--
+
+CREATE TABLE `failed_jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_reset_tokens_table', 1),
+(3, '2014_10_12_100000_create_password_resets_table', 1),
+(4, '2019_08_19_000000_create_failed_jobs_table', 1),
+(5, '2019_12_14_000001_create_personal_access_tokens_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `password_reset_tokens`
+--
+
+CREATE TABLE `password_reset_tokens` (
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `personal_access_tokens`
+--
+
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `token_login`
+--
+
+CREATE TABLE `token_login` (
+  `id` int(11) NOT NULL,
+  `access_token` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `token_login`
+--
+
+INSERT INTO `token_login` (`id`, `access_token`) VALUES
+(1, 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnbmNfLUNMdkh4UG92UFZYT18wMjJ5N19MUFh1VXJ0Y3RaUjVnYU5oMmNjIn0.eyJleHAiOjE3MDM2NzIwMTAsImlhdCI6MTcwMzY3MTcxMCwianRpIjoiZmFjYTFiYzctMThmNS00OTEyLWFmNzYtY2FmM2I4MGM5YWEzIiwiaXNzIjoiaHR0cHM6Ly9zc28udG9wcmF0ZS5pby9yZWFsbXMvUEhQLWludGVybiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3NGFkODRmYi01ZTk3LTQ3MmMtOTA0MC01MGE4YWY5MmRjYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZW1vLWNsaWVudCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtcGhwLWludGVybiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwicHVibGlzaC1ldmVudHMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiZGVtby1jbGllbnQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxOTIuMTY4Ljk2LjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1kZW1vLWNsaWVudCIsImNsaWVudEFkZHJlc3MiOiIxOTIuMTY4Ljk2LjEiLCJjbGllbnRfaWQiOiJkZW1vLWNsaWVudCJ9.SYPPc3X4TjbPScDo5lzjEab9YBhIVYdIEFUnfrfNfoBoHF3Cx9SunlFCbugFIkK4-WceXLp_SVZN6YJ_6gQoAxJsM8hiIbURT52xJjMXiS2ibmLVNuegQcGtPfpu_G50LUxFHNke9fpwraxSFfRHWFOQwmkg_OEiZ9xKq74UdFlo5JOUmknXs-_hty_x6tV-emz_BtYQQFM7TxvXe-drkf_0tPEvZ9xRWlHzIfcg3Ffi8yxToFjPU-jb2N5MUEMg8TS6sYsipRcWbGmDLreXNAgSgBt91YuIr--zWAcJny1KZiNB7J1eJDvEQILfpe0HJ4H1biDVR7JS4OiwyhVMrg'),
+(2, 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnbmNfLUNMdkh4UG92UFZYT18wMjJ5N19MUFh1VXJ0Y3RaUjVnYU5oMmNjIn0.eyJleHAiOjE3MDM2NzI3MzYsImlhdCI6MTcwMzY3MjQzNiwianRpIjoiMjM5NzE1M2UtMmUxZi00MjI3LTgzODktMTNiMDdhY2RhOGI5IiwiaXNzIjoiaHR0cHM6Ly9zc28udG9wcmF0ZS5pby9yZWFsbXMvUEhQLWludGVybiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3NGFkODRmYi01ZTk3LTQ3MmMtOTA0MC01MGE4YWY5MmRjYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZW1vLWNsaWVudCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtcGhwLWludGVybiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwicHVibGlzaC1ldmVudHMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiZGVtby1jbGllbnQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxOTIuMTY4Ljk2LjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1kZW1vLWNsaWVudCIsImNsaWVudEFkZHJlc3MiOiIxOTIuMTY4Ljk2LjEiLCJjbGllbnRfaWQiOiJkZW1vLWNsaWVudCJ9.XF-GEikvdeQSbXMcgoGIb2pQX3jdZTAK_Fcpn-YLugZ9hvhmR8DojSFJ6A9XpIuDdGXjBUnGkBUCVrBVHGKj1dC5Gk3thaDBab2fQqxQVML8KuidwYVzYz3xSepLpq830OUyUztztfBmuFemSAADv4XvWfOG_ODyDkeeEk0OCGjzvYqQisalBNfm-imX3rXYBt35M3MpQyLywu7H51ZAXdu-ax1zFefU_ve6Jcm_blWtvcnf1rIuqBD12M2fObzwd0_TlayPWM7Jmc-Df6qvVJuEl1rui7Ql1pDEuIcZBXCH_cNC5pQUPviJTjPTOXCPzmUmkkpiwsQcxH236aPv0g'),
+(3, 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnbmNfLUNMdkh4UG92UFZYT18wMjJ5N19MUFh1VXJ0Y3RaUjVnYU5oMmNjIn0.eyJleHAiOjE3MDM2NzMwNzMsImlhdCI6MTcwMzY3Mjc3MywianRpIjoiNDhmMDdlMzItYzUwNy00Mzc4LTg2MGYtMjhjMzUzZGFmNWJlIiwiaXNzIjoiaHR0cHM6Ly9zc28udG9wcmF0ZS5pby9yZWFsbXMvUEhQLWludGVybiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3NGFkODRmYi01ZTk3LTQ3MmMtOTA0MC01MGE4YWY5MmRjYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZW1vLWNsaWVudCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtcGhwLWludGVybiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwicHVibGlzaC1ldmVudHMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiZGVtby1jbGllbnQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxOTIuMTY4Ljk2LjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1kZW1vLWNsaWVudCIsImNsaWVudEFkZHJlc3MiOiIxOTIuMTY4Ljk2LjEiLCJjbGllbnRfaWQiOiJkZW1vLWNsaWVudCJ9.A_zP653XkgpQeuFTAc5GA4Z7yVtcAb3Z9zTK5tBozCm73VbnmPjk33JlmTKN_ZqSZPAQEIPlRf2zAdhGlxCdP0GOoNa0G8BFEBBG2oBq5HooOZCiFx-N5tspnxkAKrwYFgaZIG93ZJ9pI_ePOmbya-TEowUv5mInNfu3QYgIPfxwGT-i2iJnOv_CtAD42PftZmJEVlNE298jDsz_U2Pg6QldVp4UpveDBFq2zuqHTY9LukqVnR9iT73l0ZzSN3JPtyCP-fgQ3tr52b2i3Dcg90haVn2vAyU8KXO-TKk9zbaF_RFebXjcbSB0fVHMJlxQHlfonzzveIkMwnbHX7PbZw'),
+(4, 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnbmNfLUNMdkh4UG92UFZYT18wMjJ5N19MUFh1VXJ0Y3RaUjVnYU5oMmNjIn0.eyJleHAiOjE3MDM2NzMzODEsImlhdCI6MTcwMzY3MzA4MSwianRpIjoiYmM0ZmRjNmQtNWY4OC00YzVmLThhOGQtMTdmZGQ2NTViYzAzIiwiaXNzIjoiaHR0cHM6Ly9zc28udG9wcmF0ZS5pby9yZWFsbXMvUEhQLWludGVybiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3NGFkODRmYi01ZTk3LTQ3MmMtOTA0MC01MGE4YWY5MmRjYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZW1vLWNsaWVudCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtcGhwLWludGVybiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwicHVibGlzaC1ldmVudHMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiZGVtby1jbGllbnQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxOTIuMTY4Ljk2LjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1kZW1vLWNsaWVudCIsImNsaWVudEFkZHJlc3MiOiIxOTIuMTY4Ljk2LjEiLCJjbGllbnRfaWQiOiJkZW1vLWNsaWVudCJ9.noJs8zWPg2psFWu_XOlskf4tJlb6ZVNGITZhDZZnlEszN4I7BVLdDHz1Lqg3JrU8Bj-v_ER0UeY-biP0npGF8JnsbET7uRpusPa_cTYcpxKovJuhHe6vhuiKaB6gON_bUda8TmMBslTNFf7BFpf7WLbLPCSLd5q5aO1HtBvPNCbdWj7umlpweVSa1AP0xN9ZS8VUXPTHKKG52XkVSOoU-arKYSRgGHZQRU1MEJBIlIrgSfcapPd7cIO0gShb77yB9rsJrB22DUn5GKiFJLpDKLwVsP_lcZkOU1GJWy3RzPU2fUcX0z3gtB1whdraY-PMUO5FojoPMLuUuGDTUjVMLw'),
+(5, 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnbmNfLUNMdkh4UG92UFZYT18wMjJ5N19MUFh1VXJ0Y3RaUjVnYU5oMmNjIn0.eyJleHAiOjE3MDM2NzM5NTUsImlhdCI6MTcwMzY3MzY1NSwianRpIjoiYmI4NWY3NGQtMzQ0NC00NGFmLTkzZmUtYzIxODA3NzY5MTM0IiwiaXNzIjoiaHR0cHM6Ly9zc28udG9wcmF0ZS5pby9yZWFsbXMvUEhQLWludGVybiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3NGFkODRmYi01ZTk3LTQ3MmMtOTA0MC01MGE4YWY5MmRjYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZW1vLWNsaWVudCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtcGhwLWludGVybiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwicHVibGlzaC1ldmVudHMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiZGVtby1jbGllbnQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxOTIuMTY4Ljk2LjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1kZW1vLWNsaWVudCIsImNsaWVudEFkZHJlc3MiOiIxOTIuMTY4Ljk2LjEiLCJjbGllbnRfaWQiOiJkZW1vLWNsaWVudCJ9.QNlsqFwszpVpnQ8yGIsH6-5mc9ZXHWku8Jdit0X_T1DtR-KM2Nn3yvWfqyG2026NcVCc4OwzGAFWFe9FDYjgIuUZ2QALVd8aZQnLaICridhiQOJO3E5F9zu2PY0yMbpR3WNQIz6mZIzBhJQ_NUHPHSsnd9lWEWoK0lOXK1-1thAGosYXJaxy6vAZgQsctcg_em7CHnjARnonv1hl1MvegFK80E-0VTbBcF0ZotHNYxk8ORn_yEGI-hEkFGNfPZMquYjH33APZsYHi8xwNdgF8onRkMeYU3Bj-xdbnLp5hoYtS8i5ux1QRlBMF_xfshvSnC2-WdOCXD1hmluXftCXhA'),
+(6, 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnbmNfLUNMdkh4UG92UFZYT18wMjJ5N19MUFh1VXJ0Y3RaUjVnYU5oMmNjIn0.eyJleHAiOjE3MDM2NzQ3OTksImlhdCI6MTcwMzY3NDQ5OSwianRpIjoiOTQ5Mzk5YzktYjkzYi00MTI4LThlNTQtMDdkMmI3OWNiYTU2IiwiaXNzIjoiaHR0cHM6Ly9zc28udG9wcmF0ZS5pby9yZWFsbXMvUEhQLWludGVybiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3NGFkODRmYi01ZTk3LTQ3MmMtOTA0MC01MGE4YWY5MmRjYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZW1vLWNsaWVudCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtcGhwLWludGVybiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwicHVibGlzaC1ldmVudHMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiZGVtby1jbGllbnQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxOTIuMTY4Ljk2LjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1kZW1vLWNsaWVudCIsImNsaWVudEFkZHJlc3MiOiIxOTIuMTY4Ljk2LjEiLCJjbGllbnRfaWQiOiJkZW1vLWNsaWVudCJ9.daZ4GlDaagSx1ySv4rEXWnE0nQ644nurNrYt6k9n-1FRvSp4qHsqoXCpDhQKZUtkOeB1FNIsjRE3WvAlcLy78ArKyNmZqXmbNFOmDOXT1iwW2i2Wjyakbr3XOnwy2e2nOLZf9bM5LZz0j_sZ4k0lFqUUgReibYxkscjtdIS5_VrlEvAjTyFT5VAcfzTEUq7ebfXG5kh6vOWi4vSdB_BAPjsxCsaFrfKJBY79iVrm993gGcGcQXxBFrZlj8N6zcHHnJdXwIH0evf9VM7r3FRGSHpuF8-WvUZlASrUY2UUMELw7NmZOlV8ASScj1_1x9vzrn9bOXGC9EZtuDcEfqKHpQ'),
+(7, 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnbmNfLUNMdkh4UG92UFZYT18wMjJ5N19MUFh1VXJ0Y3RaUjVnYU5oMmNjIn0.eyJleHAiOjE3MDM2ODAxNTMsImlhdCI6MTcwMzY3OTg1MywianRpIjoiOWE0NjBhYzAtOWIzZS00YTNhLWIyNjMtMmY0MTJjZTRhOGUxIiwiaXNzIjoiaHR0cHM6Ly9zc28udG9wcmF0ZS5pby9yZWFsbXMvUEhQLWludGVybiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3NGFkODRmYi01ZTk3LTQ3MmMtOTA0MC01MGE4YWY5MmRjYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZW1vLWNsaWVudCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtcGhwLWludGVybiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwicHVibGlzaC1ldmVudHMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiZGVtby1jbGllbnQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxOTIuMTY4Ljk2LjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1kZW1vLWNsaWVudCIsImNsaWVudEFkZHJlc3MiOiIxOTIuMTY4Ljk2LjEiLCJjbGllbnRfaWQiOiJkZW1vLWNsaWVudCJ9.ahmcIpFpWf00FfMPk85yG4W5GKJVgH0YfTfzFJZAe7kw7poHY6TE2Q9r_TuC-Z0QiDKK2e16LUABw48bYJ9e3kuTnnoOvBDvUTCrIJXnUHHclcCBeZ9MNqh_1HQZrsqFleRg-tOavnRKaFOEGs5oWy41v_YbtArExNAaubfUHGWF51Cu7KuFdHLrr9pa2CbM23_aw_7YzJ2lDxUUt-dNwsITQtPuWpxurwAfBt44U1YXRJj7Y_3Odzou-spb8VnKMyUhp6BH2Fjf7FI5gcS8k64V1qenWkQA84h9h9eCd1CYL9rSPrFgZL9QkUKlipbsoSsXxILSMhTzAWIOq1wAZg'),
+(8, 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnbmNfLUNMdkh4UG92UFZYT18wMjJ5N19MUFh1VXJ0Y3RaUjVnYU5oMmNjIn0.eyJleHAiOjE3MDM2ODA1ODQsImlhdCI6MTcwMzY4MDI4NCwianRpIjoiNjZlZDdjNWUtZmQwMi00ZWJkLTk0ZDItMWUyN2MwNGFiZTYwIiwiaXNzIjoiaHR0cHM6Ly9zc28udG9wcmF0ZS5pby9yZWFsbXMvUEhQLWludGVybiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3NGFkODRmYi01ZTk3LTQ3MmMtOTA0MC01MGE4YWY5MmRjYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZW1vLWNsaWVudCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtcGhwLWludGVybiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwicHVibGlzaC1ldmVudHMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiZGVtby1jbGllbnQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxOTIuMTY4Ljk2LjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1kZW1vLWNsaWVudCIsImNsaWVudEFkZHJlc3MiOiIxOTIuMTY4Ljk2LjEiLCJjbGllbnRfaWQiOiJkZW1vLWNsaWVudCJ9.fxjxw3u-ZB-RNzalE-OvLcj8DZ55g3tskkv3svY-VyqCpt3lYMlAEOlqSvosbu6QnQS9Y4S6hycufwRNh6LDcFRR6SoBvvi1MzSZcZaBCg-IMa8x_J7MmSP-e9EBckTqJALZCEmS2y7CFElu19zEj9SLoeiBrlrXJEI99VCRFvaPQQmIT1k21on3jah7y809pyWvrHtt5MI8wDP5rWqSPnxdmW9MJHdm4sOvyPGXOk_LZXoNDr8QW7AQGTvEhoEmCtV4KtQnzFUE-JXv0NNvTDfsy8xkZbefu-EssR-ELObbTqmOymBLn4Ume93GB0Mm7vR46hj6nGxjOZU97m7G3w'),
+(9, 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnbmNfLUNMdkh4UG92UFZYT18wMjJ5N19MUFh1VXJ0Y3RaUjVnYU5oMmNjIn0.eyJleHAiOjE3MDM2ODA5OTAsImlhdCI6MTcwMzY4MDY5MCwianRpIjoiZDRjYTU0NjgtNGFiNC00Nzg4LWEzMzEtMDJjNGNjMmE0OTk3IiwiaXNzIjoiaHR0cHM6Ly9zc28udG9wcmF0ZS5pby9yZWFsbXMvUEhQLWludGVybiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3NGFkODRmYi01ZTk3LTQ3MmMtOTA0MC01MGE4YWY5MmRjYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZW1vLWNsaWVudCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtcGhwLWludGVybiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwicHVibGlzaC1ldmVudHMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiZGVtby1jbGllbnQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxOTIuMTY4Ljk2LjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1kZW1vLWNsaWVudCIsImNsaWVudEFkZHJlc3MiOiIxOTIuMTY4Ljk2LjEiLCJjbGllbnRfaWQiOiJkZW1vLWNsaWVudCJ9.hAVMSLUBx8ylXc-7zXXEb1rszFlkUaKZEa6wsMsNrUFCDHKUY1O72sMUGEM_E9MjYFNIF1VEaXtyoH44wkQkrJZroy_G45CyLuN18PopVqeHo_UgBEGAePHknaU7mjQZefxVb0qQolhfhCNY5TUzViPR_hPfohh6yhJpxC7kjyv98QDkxwZWeveJ-H3DJd90vYMGXHClU_yuNa7kn-XOL7zT0HTzA-yEUxqPTWaGkXazTygdnS2C32Tsxx8B6v3yDmN-p8B2jhp8QajN_0KrAy75JHW0ztF9QuEJmuNR_1nA2zt9wovRldU0UuBSXAvG0LCQ0MNNFkQkXADU44UJmw'),
+(10, 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnbmNfLUNMdkh4UG92UFZYT18wMjJ5N19MUFh1VXJ0Y3RaUjVnYU5oMmNjIn0.eyJleHAiOjE3MDM3MzAyMDUsImlhdCI6MTcwMzcyOTkwNSwianRpIjoiZGRjNzFlOTEtZmMzNi00NzU2LWIxMDQtOTEwM2QwNTdkYTdhIiwiaXNzIjoiaHR0cHM6Ly9zc28udG9wcmF0ZS5pby9yZWFsbXMvUEhQLWludGVybiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3NGFkODRmYi01ZTk3LTQ3MmMtOTA0MC01MGE4YWY5MmRjYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZW1vLWNsaWVudCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtcGhwLWludGVybiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwicHVibGlzaC1ldmVudHMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiZGVtby1jbGllbnQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxOTIuMTY4Ljk2LjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1kZW1vLWNsaWVudCIsImNsaWVudEFkZHJlc3MiOiIxOTIuMTY4Ljk2LjEiLCJjbGllbnRfaWQiOiJkZW1vLWNsaWVudCJ9.PWEFiygnOjMHxJx5IvH0op6vkGnWhzOecTK850Ut9GLRmt_lA1xZDfbnq06XRXQx-anbk9Y6m7kdaV6Y-B1FLDH21-4jsyYy34_UNlFbVY2mcK1x7hoRWUyYGuBTOECrEIy84WPhSOnDr1p1U5oaxbTghTrWHKYleOP5jpQ3syzFza3tIxGa2GOANMajCaKN-w-3UXq1nL3ytYsLwqYkLv-Ign3QfHpjH1zKRBJxu92TFPREqgq3FdcqDr_yu1wKXoBVnfO5Gf9wJCBlQe2p4TDJPh7TgT97n4-xR_hmKQbG-Vjdk-jkxjKQBXfnRC9_xZXl3fIGndRNeXPK7fzeaw'),
+(11, 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnbmNfLUNMdkh4UG92UFZYT18wMjJ5N19MUFh1VXJ0Y3RaUjVnYU5oMmNjIn0.eyJleHAiOjE3MDM3MzAyNjMsImlhdCI6MTcwMzcyOTk2MywianRpIjoiMDEyNTU3ZjQtMGQyNC00Zjc1LThlYzQtMzU2MWUxYjM4MDk3IiwiaXNzIjoiaHR0cHM6Ly9zc28udG9wcmF0ZS5pby9yZWFsbXMvUEhQLWludGVybiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3NGFkODRmYi01ZTk3LTQ3MmMtOTA0MC01MGE4YWY5MmRjYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZW1vLWNsaWVudCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtcGhwLWludGVybiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwicHVibGlzaC1ldmVudHMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiZGVtby1jbGllbnQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxOTIuMTY4Ljk2LjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1kZW1vLWNsaWVudCIsImNsaWVudEFkZHJlc3MiOiIxOTIuMTY4Ljk2LjEiLCJjbGllbnRfaWQiOiJkZW1vLWNsaWVudCJ9.ISp6QzLEbUcVtgR9j7c7xgxUfwfMAABX52iaftioECmd37bB-DsXtPSRILoHJS26-xszwEQI550NCrFxlLd5L-FRwpZ-vglZd1HNXA0egg_jjzshRbliudmMLMsrFaFIpaFaKR9u-nar_PDYdjojLBeVYa59q_gomvgkdUtKJAVr_uOBX9iexFjTmitT5s5E3Xj92KvQPnKNq_6oVk1DT6a2ZK14_uZKtjmelwMfB5UME482jszzD5L4AWGtbrkk3b-TnJVVGf_kNF6VI7fw5vhqxrbGylMk4yUIWRcSr9UAAJDZtdS5hbdPFba0Rw3S6hYPAlf9RicEODGRP28u0g');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(2, 'Khánh An', 'quangan010903@gmail.com', '2023-12-27 01:36:23', 'khanhan2003', 'JLbNS5t192', '2023-12-27 01:36:23', '2023-12-27 02:02:20'),
+(3, 'Prof. Ima West MD', 'shanie00@example.net', '2023-12-27 01:36:23', '$2y$12$k0ke7PvhKRQbu5lRgi2LkO2LR1kILtNUaBA3Xez61bnRlbQ5maayG', 'HU0qi4J65o', '2023-12-27 01:36:23', '2023-12-27 01:36:23'),
+(4, 'Ms. Glenna Deckow Jr.', 'tdickinson@example.com', '2023-12-27 01:36:23', '$2y$12$k0ke7PvhKRQbu5lRgi2LkO2LR1kILtNUaBA3Xez61bnRlbQ5maayG', '9YTw7WwtOa', '2023-12-27 01:36:23', '2023-12-27 01:36:23'),
+(5, 'Mrs. Clementine Greenholt I', 'zboncak.marvin@example.org', '2023-12-27 01:36:23', '$2y$12$k0ke7PvhKRQbu5lRgi2LkO2LR1kILtNUaBA3Xez61bnRlbQ5maayG', 'yoihakJDQ3', '2023-12-27 01:36:23', '2023-12-27 01:36:23'),
+(6, 'Ms. Martina Baumbach PhD', 'effie.mosciski@example.com', '2023-12-27 01:36:23', '$2y$12$k0ke7PvhKRQbu5lRgi2LkO2LR1kILtNUaBA3Xez61bnRlbQ5maayG', '0IgASoPsAj', '2023-12-27 01:36:23', '2023-12-27 01:36:23'),
+(7, 'Prof. Jorge Champlin', 'rlebsack@example.org', '2023-12-27 01:36:23', '$2y$12$k0ke7PvhKRQbu5lRgi2LkO2LR1kILtNUaBA3Xez61bnRlbQ5maayG', 'bDKOF25lJ7', '2023-12-27 01:36:23', '2023-12-27 01:36:23'),
+(8, 'Leland Flatley', 'rbalistreri@example.com', '2023-12-27 01:36:23', '$2y$12$k0ke7PvhKRQbu5lRgi2LkO2LR1kILtNUaBA3Xez61bnRlbQ5maayG', 'oZkVkZeO0p', '2023-12-27 01:36:23', '2023-12-27 01:36:23'),
+(9, 'Dr. Birdie Terry Sr.', 'elsa51@example.org', '2023-12-27 01:36:23', '$2y$12$k0ke7PvhKRQbu5lRgi2LkO2LR1kILtNUaBA3Xez61bnRlbQ5maayG', 'YSlGaym0y4', '2023-12-27 01:36:23', '2023-12-27 01:36:23'),
+(10, 'Billy Feest', 'schroeder.jaron@example.org', '2023-12-27 01:36:23', '$2y$12$k0ke7PvhKRQbu5lRgi2LkO2LR1kILtNUaBA3Xez61bnRlbQ5maayG', 'qbil7ky2nZ', '2023-12-27 01:36:23', '2023-12-27 01:36:23'),
+(11, 'Mrs. Emelie Botsford MD', 'herman.verlie@example.net', '2023-12-27 01:36:23', '$2y$12$k0ke7PvhKRQbu5lRgi2LkO2LR1kILtNUaBA3Xez61bnRlbQ5maayG', 'FLOabkyD98', '2023-12-27 01:36:23', '2023-12-27 01:36:23'),
+(13, 'Mẫn', 'quangman0109098@gmail.com', NULL, '$2y$12$N..jOKuk5I722QAdELLq.OewCm73lG1KtJiZY5uG.QXV/XrI4cH6q', NULL, '2023-12-27 01:44:11', '2023-12-27 01:44:11'),
+(14, 'abc', 'quangan010953@gmail.com', NULL, '$2y$12$HiAFG3K1zYWfdeLBt94BHOqlzffPVchEMEnSc3JKoHBKY3p8zORT2', NULL, '2023-12-27 05:33:55', '2023-12-27 05:33:55'),
+(15, 'abc999', 'quangan01990953@gmail.com', NULL, '$2y$12$eQa4.zD4GIXhLgbeb61zFurelQvDo1maojlKngrPJWOndrUnoeM7G', NULL, '2023-12-27 05:36:02', '2023-12-27 05:36:02'),
+(16, 'abc999', 'quangan019908888953@gmail.com', NULL, '$2y$12$AtJje8JsAhMHC4OZb0lr.ODdsgNoY07GAMbGEDiaNDCSADwLc0iZi', NULL, '2023-12-27 05:36:46', '2023-12-27 05:36:46'),
+(18, 'abc9999999', 'quangan0199088889593@gmail.com', NULL, '$2y$12$i.MBIQsYZeHEVaOEuTc8r.O0hgwdTj59N6evDKpdbSMDOC0V9dYdG', NULL, '2023-12-27 05:38:35', '2023-12-27 05:38:35'),
+(19, 'andqkph25002', 'khanhan2003@gmail.com', NULL, '$2y$12$OY1AOsw4f/ig0GK2326sTeHWe.RuA447PbX.6Bmxa3wsUed350dIq', NULL, '2023-12-27 19:20:13', '2023-12-27 19:20:13');
+
+--
+-- Chỉ mục cho các bảng đã đổ
+--
+
+--
+-- Chỉ mục cho bảng `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Chỉ mục cho bảng `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Chỉ mục cho bảng `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  ADD PRIMARY KEY (`email`);
+
+--
+-- Chỉ mục cho bảng `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Chỉ mục cho bảng `token_login`
+--
+ALTER TABLE `token_login`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
+--
+
+--
+-- AUTO_INCREMENT cho bảng `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `token_login`
+--
+ALTER TABLE `token_login`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT cho bảng `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
