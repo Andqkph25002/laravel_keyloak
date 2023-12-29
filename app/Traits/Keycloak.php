@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Http;
 
 trait Keycloak
 {
-    //Hàm lấy token từ api login keycloak
+
     public function getTokenKeycloak()
     {
-        // Lấy token từ login
+
         $httpLoginKeycloak = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded'
         ])->asForm()->post(env('KETLOAK_URL') . "/realms/" . env('KEYLOAK_REALM_NAME') . "/protocol/openid-connect/token", [
@@ -25,7 +25,7 @@ trait Keycloak
     }
 
 
-    public function getUserApiKeycloak($httpGetUser, $token)
+    public function getUserIdKeycloak($httpGetUser, $token)
     {
         $httpGetUserKeycloak = Http::withHeaders([
             'Content-Type' => 'application/json',
@@ -34,7 +34,7 @@ trait Keycloak
         if ($httpGetUserKeycloak['id'] == null) {
             return null;
         }
-        $user_id = $httpGetUserKeycloak['id'];
-        return $user_id;
+        $userId = $httpGetUserKeycloak['id'];
+        return $userId;
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Http;
 
-class UpdateListener
+class UpdateKeycloakListener
 {
     use Keycloak;
     /**
@@ -26,25 +26,15 @@ class UpdateListener
     public function handle(UpdateEvent $event): void
     {
         $token = $this->getTokenKeycloak();
-        $user = User::findOrFail($event->user_id);
+        $user = User::findOrFail($event->userId);
         if ($user) {
-            $user_id_keycloak = $user->user_id_keycloak;
-
-            // event laravel
-            $httpUpdateKeycloak = Http::withHeaders([
+            $userIdKeycloak = $user->user_id_keycloak;
+            Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $token,
-            ])->put(env('KETLOAK_URL') . '/admin/realms/' . env('KEYLOAK_REALM_NAME') . '/users/' . $user_id_keycloak, [
+            ])->put(env('KETLOAK_URL') . '/admin/realms/' . env('KEYLOAK_REALM_NAME') . '/users/' . $userIdKeycloak, [
                 'email' => $event->email
             ]);
-
-            if ($httpUpdateKeycloak->successful()) { // check lai điều kiện
-                $user->update([
-                    'name' => $event->name,
-                    'email' => $event->email,
-                    'password' => $event->password,
-                ]);
-            }
         }
     }
 }

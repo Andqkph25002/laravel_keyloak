@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Http;
 
-class RegisterListener
+class CreateUserKeycloakListener
 {
     use Keycloak;
     /**
@@ -36,17 +36,8 @@ class RegisterListener
             'email' => $event->email,
         ]);
         if ($httpRegisterKeycloak->successful()) {
-            $user = User::create([
-                'name' => $event->name,
-                'email' => $event->email,
-                'password' => $event->password,
-
-            ]);
-            return response([
-                'message' => 'Đăng ký thành công !',
-                'data' => $httpRegisterKeycloak->header('location'),
-                'user' => User::where('id', $user->id)->update(['user_id_keycloak' => $this->getUserApiKeycloak($httpRegisterKeycloak->header('location'), $token)]),
-            ]);
+            $httpUserKeycloak = $httpRegisterKeycloak->header('location');
+            session()->put('userIdKeycloak', $this->getUserIdKeycloak($httpUserKeycloak, $token));
         }
     }
 }

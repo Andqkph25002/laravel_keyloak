@@ -16,17 +16,17 @@ class UpdateEvent
     public $email;
     public $password;
     public $name;
-    public $user_id;
+    public $userId;
     /**
      * Create a new event instance.
      */
-    public function __construct( $email, $password , $name , $user_id)
+    public function __construct($email, $password, $name, $userId)
     {
-       
+
         $this->email = $email;
         $this->password = $password;
         $this->name = $name;
-        $this->user_id = $user_id;
+        $this->userId = $userId;
     }
 
     /**

@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Http;
 
-class DeleteListener
+class DeleteKeycloakListener
 {
     use Keycloak;
     /**
@@ -25,19 +25,15 @@ class DeleteListener
      */
     public function handle(DeleteEvent $event): void
     {
-        $user = User::findOrFail($event->user_id);
+        $user = User::findOrFail($event->userId);
         if ($user) {
-            $user_id_keycloak = $user->user_id_keycloak;
+            $userIdKeycloak = $user->user_id_keycloak;
             $token = $this->getTokenKeycloak();
 
-            $http_delete_user_keycloak = Http::withHeaders([
+            Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $token,
-            ])->delete(env('KETLOAK_URL') . '/admin/realms/' . env('KEYLOAK_REALM_NAME') . '/users/' . $user_id_keycloak);
-
-            if ($http_delete_user_keycloak->successful()) {
-                $user->delete();
-            }
+            ])->delete(env('KETLOAK_URL') . '/admin/realms/' . env('KEYLOAK_REALM_NAME') . '/users/' . $userIdKeycloak);
         }
     }
 }
