@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Events\CreateUserKeyCloak;
 use App\Events\DeleteEvent;
 use App\Events\PostCardProcessed;
 use App\Events\RegisterEvent;
 use App\Events\UpdateEvent;
 use App\Listeners\CreateUserKeycloakListener;
+use App\Listeners\CreateUserListener;
 use App\Listeners\DeleteKeycloakListener;
 use App\Listeners\DeleteListener;
 use App\Listeners\PostCardNotification;
@@ -39,6 +41,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         UpdateEvent::class => [
             UpdateKeycloakListener::class,
+        ],
+        CreateUserKeyCloak::class => [
+            CreateUserListener::class,
         ]
     ];
 
