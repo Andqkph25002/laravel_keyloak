@@ -12,7 +12,6 @@ trait Keycloak
 
     public function getTokenKeycloak()
     {
-
         $httpLoginKeycloak = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded'
         ])->asForm()->post(env('KETLOAK_URL') . "/realms/" . env('KEYLOAK_REALM_NAME') . "/protocol/openid-connect/token", [
@@ -21,7 +20,7 @@ trait Keycloak
             'client_secret' => env('KEYLOAK_CLIENT_SECRET')
         ]);
         if ($httpLoginKeycloak['access_token'] == "") {
-            return null;
+            return response(['error' => 'Lỗi access token']);
         }
 
         return $httpLoginKeycloak['access_token'];
@@ -38,9 +37,6 @@ trait Keycloak
         $userId = $httpGetUserKeycloak['id'];
         return $userId;
     }
-
-
-
     public function createUserKeyCloak($token, $username, $email)
     {
         $httpRegisterKeycloak =  Http::withHeaders([
@@ -53,7 +49,10 @@ trait Keycloak
         ]);
         if ($httpRegisterKeycloak->successful()) {
             $httpUserKeycloak = $httpRegisterKeycloak->header('location');
-            return $httpUserKeycloak;
+            $length = strlen($httpUserKeycloak);
+            $userIdKeyCloak = substr($httpUserKeycloak, $length - 36, $length);
+            return $userIdKeyCloak;
         }
+        return null;
     }
 }

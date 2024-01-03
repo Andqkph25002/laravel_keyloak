@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use App\Models\User;
 use Closure;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class VerifyAccessToken
@@ -18,24 +17,19 @@ class VerifyAccessToken
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-
-        // Lấy Access Token từ header Authorization
         $accessToken = $request->bearerToken();
-
         if (!$accessToken) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            throw new \Exception('Unauthorized');
         }
         $decodedToken = json_decode(base64_decode(explode('.', $accessToken)[1]), true);
         try {
-            $users = User::all();
-            foreach ($users as $user) {
-                if ($user->user_id_keycloak === $decodedToken['sub']) {
-                    return $next($request);
-                }
+            $user = User::where('user_id_keycloak', $decodedToken['sub'])->first();
+            if ($user) {
+                Auth::login($user);
+                return $next($request);
             }
         } catch (\Exception $th) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            throw new \Exception('Unauthorized');
         }
     }
 }

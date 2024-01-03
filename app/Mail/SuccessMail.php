@@ -28,7 +28,7 @@ class SuccessMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome to Queue',
+            subject: 'Thông báo 2023',
 
         );
     }
