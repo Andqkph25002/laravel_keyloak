@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeMail extends Mailable
+class SuccessMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $subject, $body;
@@ -39,7 +39,7 @@ class WelcomeMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.email',
+            view: 'template.email',
             with: [
                 'subject' => $this->subject,
                 'body' => $this->body,

@@ -10,7 +10,6 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "laravel/ui": "^4.3",
         "maatwebsite/excel": "^3.1",
         "spatie/laravel-permission": "^6.3"
     },

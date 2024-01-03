@@ -36,7 +36,7 @@ class CreateUserKeyCloakJob implements ShouldQueue
         if (session()->has('userIdKeycloak')) {
             $userIdKeycloak = session()->get('userIdKeycloak');
             User::where('email', 'like', '%' . $this->email . '%')->update([
-                'userIdKeyCloak' => $userIdKeycloak
+                'user_id_keycloak' => $userIdKeycloak
             ]);
             session()->forget('userIdKeycloak');
         }

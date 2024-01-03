@@ -16,17 +16,3 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('/', [UserController::class, 'index'])->name('index');
-Route::post('/upload', [UserController::class, 'upload'])->name('upload');
-
-
-
-Route::get('/login', [LoginController::class, 'loginView'])->name('login');
-Route::post('/auth/login', [LoginController::class, 'loginUser'])->name('auth.login');

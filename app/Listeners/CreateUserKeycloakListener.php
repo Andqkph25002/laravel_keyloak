@@ -26,10 +26,10 @@ class CreateUserKeycloakListener
     public function handle(RegisterEvent $event)
     {
 
-        $token = $this->getTokenKeycloak();
+       
         $httpRegisterKeycloak =  Http::withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer ' . $event->token,
 
         ])->post(env('KETLOAK_URL') . '/admin/realms/' . env('KEYLOAK_REALM_NAME') . '/users', [
             'username' => $event->username,
@@ -37,7 +37,7 @@ class CreateUserKeycloakListener
         ]);
         if ($httpRegisterKeycloak->successful()) {
             $httpUserKeycloak = $httpRegisterKeycloak->header('location');
-            session()->put('userIdKeycloak', $this->getUserIdKeycloak($httpUserKeycloak, $token));
+            session()->put('userIdKeycloak', $this->getUserIdKeycloak($httpUserKeycloak, $event->token));
         }
     }
 }

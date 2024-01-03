@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\SuccessMail;
 use App\Mail\WelcomeMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -32,6 +33,6 @@ class SendEmailJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->email)->send(new WelcomeMail($this->subject, $this->message));
+        Mail::to($this->email)->send(new SuccessMail($this->subject, $this->message));
     }
 }

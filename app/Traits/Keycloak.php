@@ -2,7 +2,10 @@
 
 namespace App\Traits;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
+
+use Illuminate\Http\Request;
 
 trait Keycloak
 {
@@ -23,8 +26,6 @@ trait Keycloak
 
         return $httpLoginKeycloak['access_token'];
     }
-
-
     public function getUserIdKeycloak($httpGetUser, $token)
     {
         $httpGetUserKeycloak = Http::withHeaders([
@@ -36,5 +37,23 @@ trait Keycloak
         }
         $userId = $httpGetUserKeycloak['id'];
         return $userId;
+    }
+
+
+
+    public function createUserKeyCloak($token, $username, $email)
+    {
+        $httpRegisterKeycloak =  Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
+
+        ])->post(env('KETLOAK_URL') . '/admin/realms/' . env('KEYLOAK_REALM_NAME') . '/users', [
+            'username' => $username,
+            'email' => $email,
+        ]);
+        if ($httpRegisterKeycloak->successful()) {
+            $httpUserKeycloak = $httpRegisterKeycloak->header('location');
+            return $httpUserKeycloak;
+        }
     }
 }
