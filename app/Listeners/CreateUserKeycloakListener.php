@@ -3,10 +3,8 @@
 namespace App\Listeners;
 
 use App\Events\RegisterEvent;
-use App\Models\User;
+use App\Events\RegisterUserEvent;
 use App\Traits\Keycloak;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Http;
 
 class CreateUserKeycloakListener
@@ -23,13 +21,13 @@ class CreateUserKeycloakListener
     /**
      * Handle the event.
      */
-    public function handle(RegisterEvent $event)
+    public function handle(RegisterUserEvent $event)
     {
 
-        $token = $this->getTokenKeycloak();
+       
         $httpRegisterKeycloak =  Http::withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer ' . $event->token,
 
         ])->post(env('KETLOAK_URL') . '/admin/realms/' . env('KEYLOAK_REALM_NAME') . '/users', [
             'username' => $event->username,
@@ -37,7 +35,7 @@ class CreateUserKeycloakListener
         ]);
         if ($httpRegisterKeycloak->successful()) {
             $httpUserKeycloak = $httpRegisterKeycloak->header('location');
-            session()->put('userIdKeycloak', $this->getUserIdKeycloak($httpUserKeycloak, $token));
+            session()->put('userIdKeycloak', $this->getUserIdKeycloak($httpUserKeycloak, $event->token));
         }
     }
 }

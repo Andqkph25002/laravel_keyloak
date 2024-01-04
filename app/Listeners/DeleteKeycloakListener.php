@@ -2,11 +2,9 @@
 
 namespace App\Listeners;
 
-use App\Events\DeleteEvent;
+use App\Events\DeleteUserEvent;
 use App\Models\User;
 use App\Traits\Keycloak;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Http;
 
 class DeleteKeycloakListener
@@ -23,13 +21,13 @@ class DeleteKeycloakListener
     /**
      * Handle the event.
      */
-    public function handle(DeleteEvent $event): void
+    public function handle(DeleteUserEvent $event): void
     {
+       
         $user = User::findOrFail($event->userId);
         if ($user) {
             $userIdKeycloak = $user->user_id_keycloak;
             $token = $this->getTokenKeycloak();
-
             Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $token,

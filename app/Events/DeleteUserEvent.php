@@ -2,33 +2,21 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Request;
 
-class RegisterEvent
+class DeleteUserEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-   
-    public $email;
-    public $username;
-    public $password;
-    public $name;
+    public $userId;
     /**
      * Create a new event instance.
      */
-    public function __construct( $email, $username, $password , $name)
+    public function __construct($userId)
     {
-       
-        $this->email = $email;
-        $this->username = $username;
-        $this->password = $password;
-        $this->name = $name;
+        $this->userId = $userId;
     }
 
     /**

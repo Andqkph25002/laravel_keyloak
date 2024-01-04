@@ -2,21 +2,17 @@
 
 namespace App\Providers;
 
-use App\Events\DeleteEvent;
-use App\Events\PostCardProcessed;
-use App\Events\RegisterEvent;
-use App\Events\UpdateEvent;
+
+use App\Events\DeleteUserEvent;
+use App\Events\RegisterUserEvent;
+use App\Events\UpdateUserEvent;
 use App\Listeners\CreateUserKeycloakListener;
 use App\Listeners\DeleteKeycloakListener;
-use App\Listeners\DeleteListener;
-use App\Listeners\PostCardNotification;
-use App\Listeners\RegisterListener;
 use App\Listeners\UpdateKeycloakListener;
-use App\Listeners\UpdateListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
+
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -30,14 +26,14 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
 
-        RegisterEvent::class => [
+        RegisterUserEvent::class => [
             CreateUserKeycloakListener::class,
         ],
 
-        DeleteEvent::class => [
+        DeleteUserEvent::class => [
             DeleteKeycloakListener::class,
         ],
-        UpdateEvent::class => [
+        UpdateUserEvent::class => [
             UpdateKeycloakListener::class,
         ]
     ];
