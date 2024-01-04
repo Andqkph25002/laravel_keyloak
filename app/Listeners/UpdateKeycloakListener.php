@@ -25,13 +25,12 @@ class UpdateKeycloakListener
      */
     public function handle(UpdateEvent $event): void
     {
-        $token = $this->getTokenKeycloak();
         $user = User::findOrFail($event->userId);
         if ($user) {
             $userIdKeycloak = $user->user_id_keycloak;
             Http::withHeaders([
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $token,
+                'Authorization' => 'Bearer ' . $event->token,
             ])->put(env('KETLOAK_URL') . '/admin/realms/' . env('KEYLOAK_REALM_NAME') . '/users/' . $userIdKeycloak, [
                 'email' => $event->email
             ]);

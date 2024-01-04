@@ -3,26 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\DeleteEvent;
-use App\Events\RegisterEvent;
 use App\Events\UpdateEvent;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Traits\Keycloak;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
     use Keycloak;
-
-
-
     public function validateRegister(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:10',
             'username' => 'required|min:6',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
@@ -30,8 +23,6 @@ class LoginController extends Controller
 
         return $validator;
     }
-
-
     public function register(Request $request)
     {
         $validator =  $this->validateRegister($request);
@@ -41,20 +32,18 @@ class LoginController extends Controller
                 'errors' => $validator->errors()->all(),
             ]);
         }
-
         try {
-            event(new RegisterEvent($request->email, $request->username, $request->password, $request->name));
-            if (session()->has('userIdKeycloak')) {
-                $userIdKeycloak = session()->get('userIdKeycloak');
-                User::create([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'password' => $request->password,
-                    'user_id_keycloak' => $userIdKeycloak
-                ]);
-                session()->forget('userIdKeycloak');
-            }
-
+            $accessToken = $request->bearerToken();
+            $userIdKeyCloak = $this->createUserKeyCloak($accessToken, $request->username, $request->email);
+            $user = new User();
+            $user->username = $request->username;
+            $user->email  = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->assignRole($request->role);
+            $user->save();
+            User::find($user->id)->update([
+                'user_id_keycloak' => $userIdKeyCloak
+            ]);
             return response([
                 'message' => 'Đăng ký thành công !',
             ]);
@@ -64,10 +53,10 @@ class LoginController extends Controller
             ]);
         }
     }
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:10',
+            'username' => 'required',
             'email' => 'required|email',
             'password' => 'required',
         ]);
@@ -77,12 +66,14 @@ class LoginController extends Controller
             ]);
         }
         try {
-            event(new UpdateEvent($request->email, $request->password, $request->name, $id));
-            $user = User::findOrFail($id)->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
+            $accessToken = $request->bearerToken();
+            event(new UpdateEvent($accessToken, $request->email, $id));
+            $user = User::findOrFail($id);
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->password = $request->password;
+            $user->save();
+            $user->syncRoles($request->role);
             return response([
                 'message' => 'Cập nhật thành công',
                 'user' => $user
@@ -96,12 +87,21 @@ class LoginController extends Controller
 
 
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         try {
-            event(new DeleteEvent($id));
+            $accessToken = $request->bearerToken();
+            event(new DeleteEvent($accessToken, $id));
             $user = User::findOrFail($id);
+            $roles = $user->getRoleNames();
+            if (is_array($roles)) {
+                foreach ($roles as $role) {
+                    $user->removeRole($role);
+                }
+            }
+            $user->removeRole($roles);
             $user->delete();
+
             return response([
                 'message' => 'Xóa thành công'
             ]);
@@ -110,5 +110,11 @@ class LoginController extends Controller
                 'error' => 'Xóa thất bại'
             ]);
         }
+    }
+
+    public function index()
+    {
+        $user = User::all();
+        return response(['data' => $user]);
     }
 }

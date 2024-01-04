@@ -21,7 +21,7 @@ class UsersImport implements ToCollection
         foreach ($collection as $row) {
             $userIdKeyCloak = $this->createUserKeyCloak($accessToken, $row[0], $row[1]);
             if ($userIdKeyCloak == null) {
-                abort(404);
+                throw new \Exception('Unauthorized');
             }
             $data = [
                 'username' => $row[0],

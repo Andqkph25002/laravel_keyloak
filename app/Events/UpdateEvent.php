@@ -13,19 +13,16 @@ use Illuminate\Queue\SerializesModels;
 class UpdateEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    public $token;
     public $email;
-    public $password;
-    public $name;
     public $userId;
     /**
      * Create a new event instance.
      */
-    public function __construct($email, $password, $name, $userId)
+    public function __construct($token, $email,$userId)
     {
-
+        $this->token = $token;
         $this->email = $email;
-        $this->password = $password;
-        $this->name = $name;
         $this->userId = $userId;
     }
 

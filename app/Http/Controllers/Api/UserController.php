@@ -21,7 +21,6 @@ class UserController extends Controller
         }
         if (Auth::check()) {
             $email = Auth::user()->email;
-
             $file = $request->file('fileExcel');
             $filePath = $file->storeAs('imports', 'imported_file.xlsx');
             ImportUsersJob::dispatch($filePath);

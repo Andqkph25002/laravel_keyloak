@@ -1,8 +1,5 @@
 <?php
 
-use App\Events\PostCardProcessed;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    if (Auth::check()) {
+        dd(Auth::user()->email);
+    }
+    echo "Không có ai";
+    return view('index');
+});
