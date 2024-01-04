@@ -2,28 +2,29 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UpdateEvent
+class RegisterUserEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $token;
+
     public $email;
-    public $userId;
+    public $username;
+    public $password;
+    public $name;
     /**
      * Create a new event instance.
      */
-    public function __construct($token, $email,$userId)
+    public function __construct($email, $username, $password, $name)
     {
-        $this->token = $token;
+
         $this->email = $email;
-        $this->userId = $userId;
+        $this->username = $username;
+        $this->password = $password;
+        $this->name = $name;
     }
 
     /**

@@ -22,7 +22,6 @@ trait Keycloak
         if ($httpLoginKeycloak['access_token'] == "") {
             return response(['error' => 'Lỗi access token']);
         }
-
         return $httpLoginKeycloak['access_token'];
     }
     public function getUserIdKeycloak($httpGetUser, $token)

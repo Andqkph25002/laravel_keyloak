@@ -13,11 +13,3 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    if (Auth::check()) {
-        dd(Auth::user()->email);
-    }
-    echo "Không có ai";
-    return view('index');
-});

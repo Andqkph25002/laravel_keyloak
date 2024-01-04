@@ -1,9 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\LoginController;
-use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\RoleController;
-use App\Http\Controllers\Api\RoleInPermissionController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,18 +20,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
-Route::middleware(['keycloak.auth'])->group(function () {
-    Route::middleware(['check.role:admin'])->group(function () {
-        Route::post('/auth/register', [LoginController::class, 'register']);
-        Route::put('/auth/update/{id}', [LoginController::class, 'update']);
-        Route::delete('/auth/delete/{id}', [LoginController::class, 'destroy']);
-        Route::post('/import/user', [UserController::class, 'importUser']);
-        Route::post('/user/add-role', [RoleInPermissionController::class, 'addRolesInUser']);
-        Route::post('/user/update-role/{id}', [RoleInPermissionController::class, 'updateRoleInUser']);
+Route::middleware('keycloak.auth')->group(function () {
+    Route::middleware('check.role:admin')->group(function () {
+        Route::post('/user', [UserController::class, 'register']);
+        Route::put('/user/{id}', [UserController::class, 'update']);
+        Route::post('/users/import', [UserController::class, 'importUser']);
+        Route::post('/user/{id}/assign-role', [RoleController::class, 'addRolesInUser']);
+        Route::post('/user/{id}/sync-role', [RoleController::class, 'updateRoleInUser']);
     });
-    Route::middleware(['check.role:user'])->group(function () {
-        Route::get('/auth/list', [LoginController::class, 'index']);
+    Route::middleware('check.role:user')->group(function () {
+        Route::get('/users', [UserController::class, 'index']);
     });
 });
+Route::delete('/user/{id}', [UserController::class, 'destroy']);

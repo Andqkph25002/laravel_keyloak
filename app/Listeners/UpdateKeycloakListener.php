@@ -2,11 +2,9 @@
 
 namespace App\Listeners;
 
-use App\Events\UpdateEvent;
+use App\Events\UpdateUserEvent;
 use App\Models\User;
 use App\Traits\Keycloak;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Http;
 
 class UpdateKeycloakListener
@@ -23,7 +21,7 @@ class UpdateKeycloakListener
     /**
      * Handle the event.
      */
-    public function handle(UpdateEvent $event): void
+    public function handle(UpdateUserEvent $event): void
     {
         $user = User::findOrFail($event->userId);
         if ($user) {

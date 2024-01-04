@@ -3,10 +3,8 @@
 namespace App\Listeners;
 
 use App\Events\RegisterEvent;
-use App\Models\User;
+use App\Events\RegisterUserEvent;
 use App\Traits\Keycloak;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Http;
 
 class CreateUserKeycloakListener
@@ -23,7 +21,7 @@ class CreateUserKeycloakListener
     /**
      * Handle the event.
      */
-    public function handle(RegisterEvent $event)
+    public function handle(RegisterUserEvent $event)
     {
 
        
